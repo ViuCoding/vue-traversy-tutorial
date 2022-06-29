@@ -29,45 +29,89 @@ export default {
     };
   },
   methods: {
-    addTask(task) {
-      this.tasks = [...this.tasks, task];
+    async addTask(task) {
+      const res = await fetch("http://localhost:5000/tasks", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(task),
+      });
+
+      const data = await res.json();
+
+      this.tasks = [...this.tasks, data];
     },
     toggleAddTask() {
       this.showAddTask = !this.showAddTask;
     },
-    deleteTask(id) {
+    async deleteTask(id) {
       if (confirm("Are you sure?")) {
-        this.tasks = this.tasks.filter((task) => task.id !== id);
+        const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+          method: "DELETE",
+        });
+
+        res.status === 200 ? this.tasks.filter((task) => task.id !== id) : alert("Error deleting task!");
       }
     },
 
-    toggleReminder(id) {
-      this.tasks = this.tasks.map((task) => (task.id === id ? { ...task, reminder: !task.reminder } : task));
+    async toggleReminder(id) {
+      const taskToToggle = await this.fetchTask(id);
+      const updateTask = {
+        ...taskToToggle,
+        reminder: !taskToToggle.reminder,
+      };
+
+      const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(updateTask),
+      });
+
+      const data = await res.json();
+
+      this.tasks = this.tasks.map((task) => (task.id === id ? { ...task, reminder: data.reminder } : task));
+    },
+
+    async fetchTasks() {
+      const res = await fetch("http://localhost:5000/tasks");
+      const data = await res.json();
+
+      return data;
+    },
+    async fetchTask(id) {
+      const res = await fetch(`http://localhost:5000/tasks/${id}`);
+      const data = await res.json();
+
+      return data;
     },
   },
-  created() {
+  async created() {
+    this.tasks = await this.fetchTasks();
     // This is where we tipically would put in a data request so that it can load when the page opens
     // In this case we need to create a Tasks component so we can render this info on the page
-    this.tasks = [
-      {
-        id: 1,
-        text: "Race suit fitting",
-        day: "March 21st at 3:00pm",
-        reminder: true,
-      },
-      {
-        id: 2,
-        text: "Mugello Free Practice",
-        day: "May 23rd at 10:00am",
-        reminder: true,
-      },
-      {
-        id: 3,
-        text: "Portimao Tests",
-        day: "Junee 25th at 11:00am",
-        reminder: false,
-      },
-    ];
+    // this.tasks = [
+    //   {
+    //     id: 1,
+    //     text: "Race suit fitting",
+    //     day: "March 21st at 3:00pm",
+    //     reminder: true,
+    //   },
+    //   {
+    //     id: 2,
+    //     text: "Mugello Free Practice",
+    //     day: "May 23rd at 10:00am",
+    //     reminder: true,
+    //   },
+    //   {
+    //     id: 3,
+    //     text: "Portimao Tests",
+    //     day: "Junee 25th at 11:00am",
+    //     reminder: false,
+    //   },
+    // ];
   },
 };
 </script>

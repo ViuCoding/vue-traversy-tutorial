@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "Race suit fitting",
+      "day": "March 21st at 3:00pm",
+      "reminder": false
+    },
+    {
+      "id": 3,
+      "text": "Portimao Tests",
+      "day": "Junee 25th at 11:00am",
+      "reminder": true
+    },
+    {
+      "text": "asd",
+      "day": "asd",
+      "reminder": true,
+      "id": 4
+    }
+  ]
+}
