@@ -3,7 +3,8 @@
 
 <template>
   <div :key="task.id" v-for="task in tasks">
-    <Task :task="task" />
+    <!-- Since the data is still one level above we use emit once again to pass it over -->
+    <Task @toggle-reminder="$emit('toggle-reminder', task.id)" @delete-task="$emit('delete-task', task.id)" :task="task" />
   </div>
 </template>
 
@@ -18,5 +19,6 @@ export default {
   components: {
     Task,
   },
+  emits: ["delete-task", "toggle-reminder"],
 };
 </script>
