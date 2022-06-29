@@ -1,8 +1,10 @@
 <template>
   <div class="container">
     <!-- Vue Components are used with a Capital letter to differentiate them from normal HTML tags -->
-    <Header title="Task Tracker" />
-    <AddTask @add-task="addTask" />
+    <Header @toggle-add-task="toggleAddTask" title="Task Tracker" :showAddTask="showAddTask" />
+    <div v-if="showAddTask">
+      <AddTask @add-task="addTask" />
+    </div>
     <!-- Since we are passing in a dynamic array we want to "v-bind" Tasks to the tasks data array  -->
     <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
   </div>
@@ -23,11 +25,15 @@ export default {
   data() {
     return {
       tasks: [],
+      showAddTask: false,
     };
   },
   methods: {
     addTask(task) {
       this.tasks = [...this.tasks, task];
+    },
+    toggleAddTask() {
+      this.showAddTask = !this.showAddTask;
     },
     deleteTask(id) {
       if (confirm("Are you sure?")) {
