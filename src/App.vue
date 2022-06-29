@@ -42,7 +42,7 @@ export default {
         id: 3,
         text: "Portimao Tests",
         day: "Junee 25th at 11:00am",
-        reminder: true,
+        reminder: false,
       },
     ];
   },

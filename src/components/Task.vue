@@ -1,6 +1,9 @@
 <template>
-  <div class="task">
-    <h3>{{ task.text }}</h3>
+  <div :class="[task.reminder ? 'reminder' : '', 'task']">
+    <h3>
+      {{ task.text }}
+      <i class="fas fa-times"></i>
+    </h3>
     <p>{{ task.day }}</p>
   </div>
 </template>
@@ -17,6 +20,10 @@ export default {
 <style scoped>
 .fas {
   color: red;
+}
+
+.fas:active {
+  transform: scale(0.9);
 }
 .task {
   background: #f4f4f4;
