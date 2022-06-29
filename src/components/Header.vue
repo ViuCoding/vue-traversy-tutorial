@@ -2,7 +2,7 @@
   <header>
     <h1>{{ title }}</h1>
     <!-- We can pass "Props" as attributes. text and color are Props, we need to define them in the component itself -->
-    <Button text="Add Task 1" color="teal" />
+    <Button text="Add Task" color="teal" />
     <!-- <Button text="Add Task 2" color="#5784BA" /> -->
     <!-- <Button text="Add Task 3" color="lime" /> -->
   </header>

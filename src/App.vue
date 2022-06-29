@@ -2,16 +2,49 @@
   <div class="container">
     <!-- Vue Components are used with a Capital letter to differentiate them from normal HTML tags -->
     <Header title="Task Tracker" />
+    <!-- Since we are passing in a dynamic array we want to "v-bind" Tasks to the tasks data array  -->
+    <Tasks :tasks="tasks" />
   </div>
 </template>
 
 <script>
 import Header from "./components/Header";
+import Tasks from "./components/Tasks";
 
 export default {
   name: "App",
   components: {
     Header,
+    Tasks,
+  },
+  data() {
+    return {
+      tasks: [],
+    };
+  },
+  created() {
+    // This is where we tipically would put in a data request so that it can load when the page opens
+    // In this case we need to create a Tasks component so we can render this info on the page
+    this.tasks = [
+      {
+        id: 1,
+        text: "Race suit fitting",
+        day: "March 21st at 3:00pm",
+        reminder: true,
+      },
+      {
+        id: 2,
+        text: "Mugello Free Practice",
+        day: "May 23rd at 10:00am",
+        reminder: true,
+      },
+      {
+        id: 3,
+        text: "Portimao Tests",
+        day: "Junee 25th at 11:00am",
+        reminder: true,
+      },
+    ];
   },
 };
 </script>
